@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>モンスター討伐じゃんけん</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <div id="streak-center" class="streak-center">0 連勝中！</div>
+
+  <!-- 【バトル画面】 -->
+  <div class="game-card" id="game-view">
+    <h1>⚔️ モンスター討伐バトル ⚔️</h1>
+
+    <div class="battle-arena">
+      <div class="character-box player-box">
+        <div id="player-name" class="status-name">勇者 (Lv.1)</div>
+        <div class="hp-bg"><div id="player-hp-bar" class="hp-bar player-hp"></div></div>
+        <div id="player-hp-text" class="hp-text">HP: 150 / 150</div>
+        <div id="player-exp" class="exp-text">EXP: 0 / 30</div>
+        <img id="player-image" src="71476f75-890a-420f-b43b-7a753cf26dcd.jpg" class="char-img" alt="勇者">
+      </div>
+
+      <div class="vs-text">VS</div>
+
+      <div class="character-box enemy-box">
+        <div id="monster-name" class="status-name">モンスター</div>
+        <div class="hp-bg"><div id="enemy-hp-bar" class="hp-bar enemy-hp"></div></div>
+        <div id="enemy-hp-text" class="hp-text">HP: 300 / 300</div>
+        <div class="exp-text" style="visibility: hidden;">-</div>
+        <img id="monster-image" class="char-img" src="" alt="モンスター">
+      </div>
+    </div>
+
+    <div class="message-box">
+      <p id="pc-hand" style="margin:5px 0; color:#ddd;">野生のモンスターがあらわれた！</p>
+      <p id="judgment" style="margin:5px 0; color:#ffdd00;">どうする？ 手をえらんでね！</p>
+    </div>
+
+    <div id="janken-buttons" class="btn-group">
+      <button class="janken-btn" onclick="playJanken(0)">✊ グー</button>
+      <button class="janken-btn" onclick="playJanken(1)">✌️ チョキ</button>
+      <button class="janken-btn" onclick="playJanken(2)">🖐️ パー</button>
+      <button class="heal-btn" onclick="healAction()">💖 回復(EXP-10)</button>
+      <button id="item-btn" class="item-btn" onclick="useItem()">📜 必殺の巻物(残3)</button>
+    </div>
+
+    <div id="catch-stage">
+      <p id="catch-msg" style="margin:0 0 8px 0; color:#ffdd00; font-weight:bold;">✨ 討伐成功！ゲットチャンス！</p>
+      <button class="catch-btn" onclick="tryCatch()">仲間にする！</button>
+    </div>
+
+    <div id="catch-area">
+      <h3>【 仲間リスト 】</h3>
+      <div id="party-list" class="party-list"></div>
+    </div>
+  </div>
+
+  <!-- 🏆 【クリア画面】 -->
+  <div id="clear-screen" class="special-screen" style="display: none;">
+    <h1>🎉 ゲームクリア！！ 🎉</h1>
+    <p>おめでとう！<br>最強の魔王を見事討伐した！</p>
+    <button class="continue-btn" onclick="continueAfterClear()">続けて遊ぶ（魔王ゲットへ！）</button>
+  </div>
+
+  <!-- 💀 【ゲームオーバー画面】(Lv1で敗北) -->
+  <div id="gameover-screen" class="special-screen" style="display: none;">
+    <h1>💀 GAME OVER 💀</h1>
+    <p>勇者は力尽きてしまった...<br>レベル1だったため、最初からやり直します。</p>
+    <button class="restart-btn" onclick="restartAfterGameOver()">最初からやり直す</button>
+  </div>
+
+  <!--  【レベルアップ画面】 -->
+  <div id="levelup-screen" class="special-screen" style="display: none; border-color: #4dd0e1;">
+    <h1 style="color: #4dd0e1; text-shadow: 0 0 10px #00acc1;">🌟 LEVEL UP 🌟</h1>
+    <p id="levelup-msg">レベルが上がった！</p>
+    <button class="continue-btn" style="background-color: #0077b6;" onclick="closeLevelUp()">次へ進む</button>
+  </div>
+
+  <!-- ☠️ 【ペナルティ画面】(Lv2以上で敗北)  -->
+  <div id="penalty-screen" class="special-screen" style="display: none; border-color: #ff7b00;">
+    <h1 style="color: #ff7b00; text-shadow: 0 0 10px #cc6600;">⚠️ 敗北... ⚠️</h1>
+    <p>勇者は倒れてしまった…<br>デスペナルティとしてレベルが1下がった！</p>
+    <button class="continue-btn" style="background-color: #ff7b00;" onclick="closePenalty()">復活する</button>
+  </div>
+
+  <!-- 🛡️ 【身代わり画面】(仲間が犠牲になった時)  -->
+  <div id="sacrifice-screen" class="special-screen" style="display: none; border-color: #00ff00;">
+    <h1 style="color: #00ff00; text-shadow: 0 0 10px #00cc00;">🛡️ 身代わり 🛡️</h1>
+    <p>かばってくれた…！<br>仲間が犠牲になり、HPが全回復した！</p>
+    <button class="continue-btn" style="background-color: #38b000;" onclick="closeSacrifice()">戦闘に戻る</button>
+  </div>
+
+  <script src="./js/main.js"></script>
+</body>
+</html>
